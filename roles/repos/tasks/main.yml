@@ -1,0 +1,25 @@
+---
+- block:
+  - name: "Add GPG keys from keyserver"
+    apt_key: keyserver={{item.keyserver}} id={{item.id}}
+    with_items:
+      - { keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
+
+  - name: "Add GPG keys from URL"
+    apt_key: url={{item}} state=present
+    with_items:
+      - https://www.virtualbox.org/download/oracle_vbox.asc
+      - https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+  - name: "Add repositories from URL"
+    apt_repository: repo={{item}} state=present
+    with_items:
+      - deb http://repository.spotify.com testing non-free
+      - deb http://download.virtualbox.org/virtualbox/debian {{ansible_lsb.codename}} contrib
+
+  - name: "Add repositories from PPA"
+    apt_repository: repo={{item}}
+    #apt_repository: repo={{item}} codename={{ansible_lsb.codename}}
+    with_items:
+      - 'ppa:ansible/ansible'
+  become: true

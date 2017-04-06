@@ -1,0 +1,21 @@
+- shell: vboxmanage -v
+  register: vboxversion
+
+- set_fact:
+    vboxversion1: "{{ vboxversion.stdout.split('r')[0] }}"
+    vboxversion2: "{{ vboxversion.stdout.split('r')[1] }}"
+
+- set_fact:
+    vboxextpack: "Oracle_VM_VirtualBox_Extension_Pack-{{vboxversion1}}-{{vboxversion2}}.vbox-extpack"
+    vboxextpack_url: "http://download.virtualbox.org/virtualbox/{{vboxversion1}}/Oracle_VM_VirtualBox_Extension_Pack-{{vboxversion1}}-{{vboxversion2}}.vbox-extpack"
+
+- get_url:
+    url: "{{vboxextpack_url}}"
+    dest: "/tmp/{{vboxextpack}}"
+
+- shell: "VBoxManage extpack install /tmp/{{vboxextpack}}"
+  become: true
+
+- file:
+    path: "/tmp/{{vboxextpack}}"
+    state: absent
