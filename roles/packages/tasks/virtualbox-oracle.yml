@@ -13,7 +13,7 @@
     url: "{{vboxextpack_url}}"
     dest: "/tmp/{{vboxextpack}}"
 
-- shell: "VBoxManage extpack install --replace /tmp/{{vboxextpack}}"
+- shell: "echo y|VBoxManage extpack install --replace /tmp/{{vboxextpack}}"
   become: true
 
 - file:
