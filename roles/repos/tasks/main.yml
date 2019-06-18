@@ -23,5 +23,6 @@
     apt_repository: repo={{item}}
     with_items:
       - 'ppa:ansible/ansible'
+      - 'ppa:peterlevi/ppa'
       - 'ppa:team-xbmc/ppa'
   become: true

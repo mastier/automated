@@ -21,6 +21,8 @@
   with_items:
     - spotify-client
     - virtualbox-5.1
+    - variety
+    - variety-slideshow
     - docker-engine
     - docker-compose
   become: true
