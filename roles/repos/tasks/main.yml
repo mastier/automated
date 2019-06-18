@@ -25,4 +25,5 @@
       - 'ppa:ansible/ansible'
       - 'ppa:peterlevi/ppa'
       - 'ppa:team-xbmc/ppa'
+      - 'ppa:pmjdebruijn/darktable-release'
   become: true
