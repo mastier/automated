@@ -2,3 +2,4 @@
   roles:
     - repos
     - packages
+    - ubuntu-desktop

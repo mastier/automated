@@ -1,0 +1,8 @@
+---
+- name: Disable Lid Switch
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    regexp: '^HandleLidSwitch'
+    insertafter: '^#HandleLidSwitch'
+    line: HandleLidSwitch=ignore
+  become: true
