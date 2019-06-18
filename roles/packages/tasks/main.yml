@@ -10,6 +10,7 @@
     - libpython-dev
     - mc
     - vlc
+    - kodi
     - calibre
     - fbreader
   become: true
