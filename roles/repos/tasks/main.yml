@@ -11,13 +11,14 @@
     with_items:
       - https://www.virtualbox.org/download/oracle_vbox.asc
       - https://www.virtualbox.org/download/oracle_vbox_2016.asc
+      - https://download.docker.com/linux/ubuntu/gpg
 
   - name: "Add repositories from URL"
     apt_repository: repo={{item}} state=present
     with_items:
       - deb http://repository.spotify.com testing non-free
       - deb http://download.virtualbox.org/virtualbox/debian {{ansible_lsb.codename}} contrib
-      - "deb https://apt.dockerproject.org/repo ubuntu-{{ansible_lsb.codename}} main"
+      - deb https://download.docker.com/linux/ubuntu {{ansible_lsb.codename}} stable
 
   - name: "Add repositories from PPA"
     apt_repository: repo={{item}}
