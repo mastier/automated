@@ -5,6 +5,13 @@
   with_items:
     - xfonts-terminus
     - vim
+    - htop
+    - network-manager-openconnect
+    - libpython-dev
+    - mc
+    - vlc
+    - calibre
+    - fbreader
   become: true
 
 - name: Install required packages from additional repos
