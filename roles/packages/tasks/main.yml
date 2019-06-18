@@ -21,6 +21,8 @@
   with_items:
     - spotify-client
     - virtualbox-5.1
+    - docker-engine
+    - docker-compose
   become: true
 
 - include: virtualbox-oracle.yml

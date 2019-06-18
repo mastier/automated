@@ -17,6 +17,7 @@
     with_items:
       - deb http://repository.spotify.com testing non-free
       - deb http://download.virtualbox.org/virtualbox/debian {{ansible_lsb.codename}} contrib
+      - "deb https://apt.dockerproject.org/repo ubuntu-{{ansible_lsb.codename}} main"
 
   - name: "Add repositories from PPA"
     apt_repository: repo={{item}}
