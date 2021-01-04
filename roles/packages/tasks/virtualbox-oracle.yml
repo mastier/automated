@@ -1,20 +1,41 @@
 - shell: vboxmanage -v
-  register: vboxversion
+  register: vboxversion_
 
 - set_fact:
-    vboxversion1: "{{ vboxversion.stdout.split('r')[0] }}"
-    vboxversion2: "{{ vboxversion.stdout.split('r')[1] }}"
+    vboxversion: "{{ vboxversion_.stdout.split('r')[0] }}"
+    vboxrev: "{{ vboxversion_.stdout.split('r')[1] }}"
+
+- shell: vboxmanage list extpacks
+  register: extpacks
 
 - set_fact:
-    vboxextpack: "Oracle_VM_VirtualBox_Extension_Pack-{{vboxversion1}}-{{vboxversion2}}.vbox-extpack"
-    vboxextpack_url: "http://download.virtualbox.org/virtualbox/{{vboxversion1}}/Oracle_VM_VirtualBox_Extension_Pack-{{vboxversion1}}-{{vboxversion2}}.vbox-extpack"
+    extpackversion: "{{ extpacks.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: 'Oracle VM VirtualBox Extension Pack\nVersion:\s+([\d\w.]+)'
+- debug:
+    var: extpackversion
+
+- set_fact:
+    extpackrev: "{{ extpacks.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: 'Oracle VM VirtualBox Extension Pack\nVersion.+\nRevision:\s+(\d+)'
+- debug:
+    var: extpackrev
+
+- set_fact:
+    vboxextpack: "Oracle_VM_VirtualBox_Extension_Pack-{{vboxversion}}-{{vboxrev}}.vbox-extpack"
+    vboxextpack_url: "http://download.virtualbox.org/virtualbox/{{vboxversion}}/Oracle_VM_VirtualBox_Extension_Pack-{{vboxversion}}-{{vboxrev}}.vbox-extpack"
 
 - get_url:
     url: "{{vboxextpack_url}}"
     dest: "/tmp/{{vboxextpack}}"
+  when: vboxversion != extpackversion or
+        vboxrev != extpackrev
 
 - shell: "echo y|VBoxManage extpack install --replace /tmp/{{vboxextpack}}"
   become: true
+  when: vboxversion != extpackversion or
+        vboxrev != extpackrev
 
 - file:
     path: "/tmp/{{vboxextpack}}"

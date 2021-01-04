@@ -6,3 +6,9 @@
     insertafter: '^#HandleLidSwitch'
     line: HandleLidSwitch=ignore
   become: true
+
+- name: Restart systemd-logind
+  service:
+    name: systemd-logind
+    state: restarted
+  become: true
