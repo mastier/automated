@@ -5,10 +5,12 @@
     regexp: '^HandleLidSwitch'
     insertafter: '^#HandleLidSwitch'
     line: HandleLidSwitch=ignore
+  register: logindconf
   become: true
 
 - name: Restart systemd-logind
   service:
     name: systemd-logind
     state: restarted
+  when: logindconf.changed
   become: true
