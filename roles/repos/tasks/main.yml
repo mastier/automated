@@ -5,6 +5,7 @@
     with_items:
       - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
       - {keyserver: p80.pool.sks-keyservers.net, id: 58118E89F3A912897C070ADBF76221572C52609D}
+      - {keyserver: keyserver.ubuntu.com, id: D1742AD60D811D58}
 
   - name: "Add GPG keys from URL"
     apt_key: url={{item}} state=present
